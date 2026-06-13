@@ -1,0 +1,304 @@
+
+
+TITLE:   "Predicting the Founding of Social Organizations Among Tecnológico
+          de Monterrey Alumni: A Machine Learning Approach"
+FILE:    Borrador_Paper_Tec80Aniversario.pdf
+AUTHORS: Gerardo Leiva Díaz, Isaac Francisco Sánchez Veloquio,
+         David Alejandro Lozano Arreola, Jorge Betanzo Carriles
+         (Tecnológico de Monterrey)
+PAGES:   5
+DATE:    June 2026
+
+================================================================================
+1. INTRODUCTION
+   Problem Definition | Hypothesis Definition | Research Objectives
+================================================================================
+
+STRENGTHS:
+- The research problem is clearly framed within a socially relevant context:
+  identifying which alumni profiles predict nonprofit founding among a large
+  Mexican institution's graduate population.
+- The binary classification task is stated explicitly and concisely: given
+  demographic, academic, career, and wellbeing features, can we predict whether
+  an alumnus has founded a non-profit organization?
+- The motivation is dual and well-articulated: (a) institutional identification
+  of future social entrepreneurs among current students, and (b) empirical
+  validation of the hypothesis that specific academic and demographic
+  trajectories foster civic engagement.
+- The paper's structure is previewed in the introduction, aiding readability
+  and signaling a well-organized manuscript.
+
+WEAKNESSES:
+- There is no explicit, formally stated hypothesis. The research question is
+  implied but never written as a testable H0/H1 pair or enumerated set of
+  hypotheses.
+- Research objectives are embedded in narrative text rather than listed
+  separately, which reduces clarity at the formal academic level.
+- The introduction is relatively brief (approximately half a printed column),
+  which limits the contextual framing for the problem. There is no reference
+  to the state of nonprofit founding in Mexico or Latin America, nor to
+  the magnitude of the civil society sector the paper aims to address.
+- No explicit statement of the paper's contribution relative to prior work
+  is made in the introduction.
+
+RECOMMENDATIONS:
+  - Formalize research hypotheses as testable H1–Hn statements.
+  - Enumerate research objectives separately (at least 3) for clarity.
+  - Expand the contextual framing with data on Mexico's nonprofit sector
+    (e.g., INEGI / CEMEFI statistics on civil society organizations).
+  - Add a short contribution statement at the end of the introduction.
+
+
+================================================================================
+2. STATE OF THE ART
+================================================================================
+
+STRENGTHS:
+- References to seminal machine learning works are appropriate and correctly
+  placed: Breiman (2001) on Random Forests, Friedman (2001) on Gradient
+  Boosting, and Lundberg & Lee (2017) on SHAP interpretability.
+- Social entrepreneurship theory is grounded in Dacin et al. (2010) and
+  Austin et al. (2006), giving the paper a recognized theoretical anchor.
+
+WEAKNESSES:
+- There is no dedicated State of the Art or Related Work section. Literature
+  references are integrated inline without systematic synthesis or critical
+  comparison.
+- Only 6 references are cited in the entire paper. This is critically
+  insufficient for any peer-reviewed scientific publication.
+- There is no survey of prior work specifically on alumni outcome prediction,
+  educational data mining, or machine learning applied to civic engagement —
+  the paper's core thematic domain.
+- There is no discussion of existing research predicting nonprofit founding
+  behavior using ML or statistical methods, which should be the primary
+  literature basis.
+- The QS 75th Anniversary longitudinal dataset mentioned in the text is
+  never properly cited as a reference.
+
+RECOMMENDATIONS:
+  - Add a dedicated Related Work section (minimum 1 full page).
+  - Survey alumni outcome prediction literature (e.g., Romero & Ventura
+    2007, educational data mining surveys).
+  - Include prior studies on nonprofit founding, civic engagement prediction,
+    and social entrepreneurship empirical research.
+  - Expand to at least 15–20 references for credible peer-reviewed positioning.
+  - Properly cite all datasets referenced in the text.
+
+
+================================================================================
+3. METHODOLOGY AND EXPERIMENTATION
+================================================================================
+
+STRENGTHS:
+- The preprocessing pipeline is described systematically and is reproducible:
+  column selection (64 features), missing value handling with a >60% threshold
+  for dropping columns, median/mode imputation, binary encoding, five
+  engineered features (years_since_grad, leadership_breadth, etc.), and
+  one-hot encoding resulting in a 544-column feature matrix.
+- The 80/20 stratified train/test split and 5-fold stratified cross-validation
+  are appropriate and well-justified given the class imbalance (6.95% positive).
+- ROC-AUC is correctly selected as the primary metric for an imbalanced
+  classification task.
+- Six model families are systematically compared: Logistic Regression, Decision
+  Tree, Random Forest, Gradient Boosting, Gaussian Naïve Bayes, and Quadratic
+  Discriminant Analysis — providing a fair and diverse benchmark.
+- SHAP (TreeExplainer) is applied for interpretability, going beyond simple
+  feature importances and enabling per-observation explanations.
+- Class imbalance is addressed through class_weight='balanced' across all
+  applicable models.
+
+WEAKNESSES:
+- There is no mention of a hyperparameter search or tuning procedure for
+  Gradient Boosting (the winning model). It is unclear whether the reported
+  hyperparameters (100 estimators, max_depth=3, lr=0.05, subsample=0.8)
+  were selected via grid search, random search, or set manually by the authors.
+- The justification for keeping tree depths shallow ("to limit computational
+  cost and reduce overfitting") is asserted but not empirically validated
+  through learning curves or validation experiments.
+- The risk of data leakage from contemporaneous behavioral variables
+  (volunteering, donations, organizational membership — all potentially
+  measured after or simultaneously with the founding outcome) is not addressed
+  in the methodology, despite the authors flagging it in the limitations section.
+- No dimensionality reduction or feature selection procedure is described
+  for the 544-feature post-encoding matrix, which could introduce noise and
+  reduce model interpretability.
+- No class oversampling technique (e.g., SMOTE) is applied or discussed as
+  an alternative to class weighting.
+
+RECOMMENDATIONS:
+  - Document the hyperparameter selection procedure explicitly.
+  - Address data leakage risk proactively in the methodology, not only in
+    the limitations. Consider time-ordering all variables relative to the
+    founding outcome.
+  - Apply and report results with at least one feature selection technique
+    (e.g., recursive feature elimination, mutual information).
+  - Discuss and compare class weighting vs. oversampling strategies.
+
+
+================================================================================
+4. RESULTS ANALYSIS
+================================================================================
+
+STRENGTHS:
+- The model comparison table (Table 3) is comprehensive, reporting 5-fold
+  cross-validated ROC-AUC with standard deviation, F1, Precision, and Recall
+  for all six models, enabling nuanced multi-metric assessment.
+- Gradient Boosting's hold-out performance (ROC-AUC = 0.801) is consistent
+  with its CV estimate (0.802 ± 0.009), confirming stable generalization
+  without meaningful overfitting.
+- The ROC curve plot (Figure 1) is clean and effectively visualizes the
+  ordering of all six classifiers.
+- The SHAP analysis (Table 6 + Figure 2) is the paper's strongest contribution:
+  the beeswarm plot provides both global feature importance rankings and
+  directional effects simultaneously.
+- The high-probability alumni profile (Table 7: top decile vs. rest) is an
+  excellent applied contribution — translating abstract model output into
+  concrete, actionable institutional intelligence.
+- Bivariate validation through Chi-square tests (Table 5) and Mann-Whitney U
+  tests for continuous features adds statistical rigor independently of the
+  ML models.
+
+WEAKNESSES:
+- Gradient Boosting's Recall for the founder class is 0.054 (CV) and 0.058
+  (hold-out), meaning the model misses approximately 94% of actual founders.
+  While the precision/recall trade-off is acknowledged, its operational
+  implications — specifically, the large number of genuine social entrepreneurs
+  who would be missed by the screening tool — are not adequately analyzed.
+- No probability calibration analysis (e.g., Platt scaling, Brier score, or
+  reliability diagram) is conducted, despite the paper's screening use case
+  requiring well-calibrated probability estimates.
+- The statement that the model achieves "a 30% improvement over random guessing"
+  is technically accurate but potentially misleading without contextualizing
+  the practical operational value of this improvement for alumni outreach.
+- There is no sensitivity analysis on the decision threshold. The default 0.5
+  threshold is implicitly used, but other thresholds could yield substantially
+  better recall at acceptable precision for the institutional use case.
+
+RECOMMENDATIONS:
+  - Add probability calibration analysis (reliability diagram and Brier score).
+  - Conduct threshold sensitivity analysis and recommend an operationally
+    appropriate decision threshold for the screening use case.
+  - Quantify the implications of the low recall for institutional decision-making
+    (e.g., how many true founders are missed per 1,000 alumni screened?).
+
+
+================================================================================
+5. CONCLUSIONS AND PERSPECTIVES
+================================================================================
+
+STRENGTHS:
+- Conclusions are organized around three clear and theoretically meaningful
+  thematic clusters that emerge from the SHAP analysis:
+    (1) Behavioral disposition (volunteering, donations)
+    (2) Experiential capital (age, leadership, prior company founding)
+    (3) Competency and purpose (entrepreneurial self-assessment, wb_purpose)
+- The institutional application is stated clearly and concretely: proxy
+  signals observable during university enrollment can be used to identify
+  students likely to become social entrepreneurs.
+- Future research directions are specific and grounded: longitudinal panel
+  data, causal modeling, and text-based analysis of open-ended survey responses.
+- Limitations are honestly stated and comprehensive, covering: cross-sectional
+  design, class imbalance constraints, endogeneity of volunteer/donation
+  variables, high dimensionality after encoding, and the SHAP ≠ causality caveat.
+
+WEAKNESSES:
+- The conclusions do not connect findings back to the social entrepreneurship
+  theoretical literature cited in the introduction (Dacin 2010, Austin 2006).
+  This disconnects the empirical findings from their theoretical context.
+- Ethical implications of using a predictive algorithm to profile and target
+  students based on predicted civic behavior are not discussed. Issues of
+  fairness, potential bias across gender or socioeconomic background, and
+  privacy deserve mention.
+- No discussion of a deployment pathway: how would the model be implemented
+  institutionally? What would the workflow look like for academic advisors
+  or program designers?
+
+RECOMMENDATIONS:
+  - Connect the three thematic clusters explicitly to existing social
+    entrepreneurship theory.
+  - Add a paragraph on algorithmic fairness and ethical use of predictive
+    profiling in an educational institutional context.
+  - Describe a proposed deployment or pilot study pathway.
+
+
+================================================================================
+6. BIBLIOGRAPHY
+================================================================================
+
+EVALUATION:
+- Only 6 references are cited. This is severely insufficient for a scientific
+  paper, even a 5-page conference submission targeted at most venues.
+- Of the 6 references, those that exist are appropriate:
+    [1] QS Global Impact Study (grey literature, institutional report)
+    [2] Lundberg & Lee (2017) — SHAP (NIPS, peer-reviewed, appropriate)
+    [3] Dacin et al. (2010) — Social entrepreneurship (Organization Science)
+    [4] Austin et al. (2006) — Social vs. commercial entrepreneurship
+    [5] Breiman (2001) — Random Forests (Machine Learning journal)
+    [6] Friedman (2001) — Gradient Boosting (Annals of Statistics)
+- Reference [1] (QS, 2023) is grey literature. It should be supplemented
+  with peer-reviewed publications on higher education impact measurement.
+- The QS 75th Anniversary dataset mentioned in the text as a complementary
+  reference is never formally cited.
+- Litterature is very old 2001?
+- There are no citations from educational data mining (EDM), alumni studies,
+  or civic engagement prediction literature — areas directly relevant to the
+  paper's contribution claims.
+- No citation style is declared. The numbered format appears consistent but
+  bibliographic formatting is minimal.
+
+RECOMMENDATIONS:
+  - Expand bibliography to at least 15–20 references.
+  - Add: (a) Romero & Ventura (2007) — Educational Data Mining survey;
+         (b) Alumni outcome prediction studies (e.g., Kotsiantis et al.);
+         (c) Nonprofit sector / civic engagement literature;
+         (d) Imbalanced learning references (He & Garcia 2009 or similar);
+         (e) Scikit-learn / Python ML tools reference (Pedregosa et al. 2011).
+  - Properly cite all datasets used in the study.
+  - Declare a citation style (IEEE, APA, or ACM).
+
+
+================================================================================
+7. RECOMMENDED CONFERENCES FOR SUBMISSION
+================================================================================
+
+1. IEEE Frontiers in Education Conference (FIE)
+   - Scope: Technology and innovation in engineering and computing education,
+     with a track on data-driven institutional research.
+   - Fit: Strong alignment with ML-based alumni impact analysis and the use
+     of institutional data for civic outcome prediction and program design.
+   - Typical submission deadline: March–April for an October conference.
+   - Note: Expand the state of the art and bibliography before submitting.
+
+2. International Conference on Educational Data Mining (EDM)
+   - Scope: Machine learning, data mining, and analytics applied to
+     educational data and learner/alumni outcomes.
+   - Fit: Excellent methodological fit. The gradient boosting pipeline,
+     SHAP interpretability, and class imbalance handling are all well-aligned
+     with EDM's technical standards.
+   - Acceptance rate: ~25–30%. Requires a strong methodology section and
+     engagement with prior EDM literature.
+
+3. ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD)
+   - Scope: Applied data mining and knowledge discovery with real-world,
+     large-scale datasets.
+   - Fit: The N=25,356 dataset and SHAP interpretability work meet KDD's
+     empirical bar. The social impact framing provides novelty.
+   - Note: Highly competitive. The paper would require significant expansion
+     of its state of the art, reproducibility documentation, and results
+     discussion before meeting KDD's review standards.
+
+================================================================================
+OVERALL SCORE:    5.8 / 10 80
+PUBLICATION STATUS: Needs significant revision before submission.
+
+SUMMARY ASSESSMENT:
+This paper presents a methodologically sound and practically motivated machine
+learning study on a large and unique alumni dataset. The SHAP interpretability
+analysis and the high-probability alumni profile are genuine contributions. However,
+the paper is significantly weakened by an insufficient literature review, a minimal
+bibliography of only 6 references, the absence of formal hypotheses, and unaddressed
+data leakage risks from contemporaneous behavioral variables. With dedicated effort
+on the state of the art, formal hypothesis framing, and bibliography expansion, this
+paper has strong potential for acceptance at a mid-tier educational data mining or
+applied ML conference.
+================================================================================

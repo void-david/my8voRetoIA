@@ -1,0 +1,114 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{cemefi2020}
+\citation{qs2023}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\citation{romero2007}
+\citation{kotsiantis2007}
+\citation{baker2009}
+\citation{papamitsiou2014}
+\citation{tight2020}
+\citation{drachenberg2022}
+\citation{austin2006}
+\citation{dacin2010}
+\citation{mair2006}
+\citation{wilson2000}
+\citation{bacq2011}
+\citation{thornton1999}
+\citation{he2009}
+\citation{pedregosa2011}
+\citation{fernandez2018}
+\citation{qs2023}
+\citation{qs2015}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{2}{section.2}\protected@file@percent }
+\newlabel{sec:related}{{2}{2}{Related Work}{section.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Educational Data Mining and Alumni Outcome Prediction}{2}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Social Entrepreneurship: Theory and Predictors}{2}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Imbalanced Classification in Social Science}{2}{subsection.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Data and Preprocessing}{2}{section.3}\protected@file@percent }
+\newlabel{sec:data}{{3}{2}{Data and Preprocessing}{section.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Dataset}{2}{subsection.3.1}\protected@file@percent }
+\citation{breiman2001}
+\citation{friedman2001}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Target Variable}{3}{subsection.3.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Target variable class distribution.}}{3}{table.1}\protected@file@percent }
+\newlabel{tab:target}{{1}{3}{Target variable class distribution}{table.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Feature Engineering}{3}{subsection.3.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Descriptive statistics for key continuous features (full sample).}}{3}{table.2}\protected@file@percent }
+\newlabel{tab:features}{{2}{3}{Descriptive statistics for key continuous features (full sample)}{table.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Methodology}{3}{section.4}\protected@file@percent }
+\newlabel{sec:methods}{{4}{3}{Methodology}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Experimental Setup}{3}{subsection.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Models}{3}{subsection.4.2}\protected@file@percent }
+\citation{pedregosa2011}
+\citation{lundberg2017}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Threshold Sensitivity Analysis}{4}{subsection.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Interpretability: SHAP}{4}{subsection.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Model Comparison Results}{4}{section.5}\protected@file@percent }
+\newlabel{sec:results}{{5}{4}{Model Comparison Results}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Cross-Validated Performance}{4}{subsection.5.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces 5-fold stratified cross-validation results (training set, $n = 20{,}284$). Models sorted by ROC-AUC.}}{4}{table.3}\protected@file@percent }
+\newlabel{tab:cv}{{3}{4}{5-fold stratified cross-validation results (training set, $n = 20{,}284$). Models sorted by ROC-AUC}{table.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Hold-Out Test Performance}{4}{subsection.5.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces ROC curves for all six models on the hold-out test set ($n = 5{,}072$). Gradient Boosting achieves AUC $= 0.80$; Gaussian NB performs at chance (AUC $= 0.50$). The dotted diagonal is a random classifier.}}{4}{figure.1}\protected@file@percent }
+\newlabel{fig:roc_curves}{{1}{4}{ROC curves for all six models on the hold-out test set ($n = 5{,}072$). Gradient Boosting achieves AUC $= 0.80$; Gaussian NB performs at chance (AUC $= 0.50$). The dotted diagonal is a random classifier}{figure.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Gradient Boosting hold-out performance ($n=5{,}072$).}}{5}{table.4}\protected@file@percent }
+\newlabel{tab:holdout}{{4}{5}{Gradient Boosting hold-out performance ($n=5{,}072$)}{table.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Threshold Sensitivity}{5}{subsection.5.3}\protected@file@percent }
+\newlabel{sec:threshold}{{5.3}{5}{Threshold Sensitivity}{subsection.5.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Left: precision, recall, and F1 for the founder class as a function of the decision threshold. Right: precision-recall curve. The dotted line marks the no-skill baseline equal to the class prevalence ($6.95\%$).}}{5}{figure.2}\protected@file@percent }
+\newlabel{fig:threshold}{{2}{5}{Left: precision, recall, and F1 for the founder class as a function of the decision threshold. Right: precision-recall curve. The dotted line marks the no-skill baseline equal to the class prevalence ($6.95\%$)}{figure.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Statistical Significance of Individual Features}{5}{subsection.5.4}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Chi-square test results for binary features vs.\ \texttt  {founded\_nonprofit}.}}{5}{table.5}\protected@file@percent }
+\newlabel{tab:chi2}{{5}{5}{Chi-square test results for binary features vs.\ \texttt {founded\_nonprofit}}{table.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}SHAP Interpretability Analysis}{5}{section.6}\protected@file@percent }
+\newlabel{sec:shap}{{6}{5}{SHAP Interpretability Analysis}{section.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Global Feature Importance}{5}{subsection.6.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Top 15 features by mean $|\text  {SHAP}|$ (Gradient Boosting, test set $n = 5{,}072$).}}{5}{table.6}\protected@file@percent }
+\newlabel{tab:shap}{{6}{5}{Top 15 features by mean $|\text {SHAP}|$ (Gradient Boosting, test set $n = 5{,}072$)}{table.6}{}}
+\citation{mair2006}
+\citation{wilson2000}
+\citation{dacin2010}
+\citation{austin2006}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Directional Effects}{6}{subsection.6.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces SHAP beeswarm plot for the Gradient Boosting model. Each point represents one test-set observation; color encodes the feature value (red $=$ high, blue $=$ low). Features ordered by mean $|\text  {SHAP}|$.}}{6}{figure.3}\protected@file@percent }
+\newlabel{fig:shap_beeswarm}{{3}{6}{SHAP beeswarm plot for the Gradient Boosting model. Each point represents one test-set observation; color encodes the feature value (red $=$ high, blue $=$ low). Features ordered by mean $|\text {SHAP}|$}{figure.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Individual Prediction Explanation}{6}{subsection.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}High-Probability Alumni Profile}{6}{section.7}\protected@file@percent }
+\newlabel{sec:profile}{{7}{6}{High-Probability Alumni Profile}{section.7}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Numeric profile comparison: high-probability founders (top decile) vs.\ rest.}}{6}{table.7}\protected@file@percent }
+\newlabel{tab:profile}{{7}{6}{Numeric profile comparison: high-probability founders (top decile) vs.\ rest}{table.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Discussion}{6}{section.8}\protected@file@percent }
+\newlabel{sec:discussion}{{8}{6}{Discussion}{section.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.1}Key Findings and Theoretical Connections}{6}{subsection.8.1}\protected@file@percent }
+\bibstyle{plainnat}
+\bibcite{qs2023}{{1}{}{{}}{{}}}
+\bibcite{qs2015}{{2}{}{{}}{{}}}
+\bibcite{cemefi2020}{{3}{}{{}}{{}}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.2}Limitations}{7}{subsection.8.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.3}Ethical Considerations}{7}{subsection.8.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.4}Toward Institutional Deployment}{7}{subsection.8.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusion}{7}{section.9}\protected@file@percent }
+\newlabel{sec:conclusion}{{9}{7}{Conclusion}{section.9}{}}
+\bibcite{romero2007}{{4}{}{{}}{{}}}
+\bibcite{kotsiantis2007}{{5}{}{{}}{{}}}
+\bibcite{baker2009}{{6}{}{{}}{{}}}
+\bibcite{papamitsiou2014}{{7}{}{{}}{{}}}
+\bibcite{tight2020}{{8}{}{{}}{{}}}
+\bibcite{drachenberg2022}{{9}{}{{}}{{}}}
+\bibcite{austin2006}{{10}{}{{}}{{}}}
+\bibcite{dacin2010}{{11}{}{{}}{{}}}
+\bibcite{mair2006}{{12}{}{{}}{{}}}
+\bibcite{wilson2000}{{13}{}{{}}{{}}}
+\bibcite{bacq2011}{{14}{}{{}}{{}}}
+\bibcite{thornton1999}{{15}{}{{}}{{}}}
+\bibcite{he2009}{{16}{}{{}}{{}}}
+\bibcite{pedregosa2011}{{17}{}{{}}{{}}}
+\bibcite{fernandez2018}{{18}{}{{}}{{}}}
+\bibcite{breiman2001}{{19}{}{{}}{{}}}
+\bibcite{friedman2001}{{20}{}{{}}{{}}}
+\bibcite{lundberg2017}{{21}{}{{}}{{}}}
+\providecommand\NAT@force@numbers{}\NAT@force@numbers
+\gdef \@abspage@last{8}
