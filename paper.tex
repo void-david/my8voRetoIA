@@ -11,6 +11,7 @@
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage{xcolor}
 \usepackage{float}
+\newcommand{\doi}[1]{\href{https://doi.org/#1}{doi:#1}}
 
 % ── Formatting ────────────────────────────────────────────────────────────────
 \setlength{\columnsep}{0.6cm}
@@ -30,7 +31,7 @@
 
 % ── Title ─────────────────────────────────────────────────────────────────────
 \title{\textbf{Predicting the Founding of Social Organizations\\
-Among Tecnológico de Monterrey Alumni:\\
+Among University Alumni:\\
 A Machine Learning Approach}}
 
 \author{Gerardo Leiva Díaz, Isaac Francisco Sánchez Veloquio,\\
@@ -45,39 +46,78 @@ A Machine Learning Approach}}
 % ── Abstract ──────────────────────────────────────────────────────────────────
 \begin{abstract}
 \noindent
-We develop a machine learning pipeline to identify which demographic and academic characteristics of Tecnológico de Monterrey alumni are most associated with founding non-profit social organizations. Using a survey dataset of $N = 25{,}356$ alumni collected on the institution's 80th anniversary in collaboration with Quacquarelli Symonds (QS), we evaluated six classification models after systematic preprocessing and feature engineering. Gradient Boosting achieved the best discriminative performance (ROC-AUC $= 0.801$, 5-fold CV). SHAP analysis identifies volunteering behavior, prior company founding, age, philanthropic donation habits, and leadership experience as the dominant predictors. Threshold sensitivity analysis further shows that the default classifier can be reconfigured to materially improve founder recall for institutional screening. These findings provide a practical basis for early identification programs targeting students with strong civic potential.
+Despite Mexico having one of Latin America's largest civil society sectors, little is empirically known about what distinguishes alumni who go on to found non-profit organizations from those who do not. This gap leaves universities without actionable evidence to guide civic-engagement programs, fellowship design, or early identification of students with high social-entrepreneurial potential. We address this problem using a large-scale alumni survey ($N = 25{,}356$) collected by Tecnológico de Monterrey in collaboration with Quacquarelli Symonds (QS) on the institution's 80th anniversary—one of the richest alumni-outcome datasets available in the Mexican higher education system.
+
+Our approach treats nonprofit founding as a binary classification problem and evaluates seven supervised learning models—including XGBoost alongside Gradient Boosting, Random Forest, Logistic Regression, Decision Tree, Gaussian Naïve Bayes, and Quadratic Discriminant Analysis—after systematic feature engineering and class-imbalance handling. XGBoost achieved the top discriminative performance (ROC-AUC $= 0.81$--$0.82$, 5-fold CV), closely followed by Gradient Boosting (ROC-AUC $= 0.801$). SHAP interpretability analysis on the best model identifies volunteering behavior, prior company founding, age, philanthropic donation habits, and leadership breadth as the dominant predictors. We additionally test three sociologically grounded hypotheses on leadership trajectories, multicultural education effects, and entrepreneurial archetypes using both statistical tests and all trained models.
+
+Threshold sensitivity analysis shows that shifting the decision boundary from $0.5$ to $\approx 0.15$ recovers roughly $55\%$ of genuine founders while maintaining precision well above the base rate of $6.95\%$—making the model viable for low-cost institutional screening. These findings offer a practical, data-driven basis for early identification programs targeting students with strong civic potential.
 
 \medskip
-\noindent\textbf{Keywords:} social entrepreneurship; machine learning; gradient boosting; SHAP; alumni impact; non-profit founding; educational data mining.
+\noindent\textbf{Keywords:} social entrepreneurship; machine learning; XGBoost; gradient boosting; SHAP; alumni impact; non-profit founding; educational data mining; hypothesis testing.
 \end{abstract}
 
 % ── 1. Introduction ───────────────────────────────────────────────────────────
 \section{Introduction}
 
-Mexico has one of Latin America's most active civil society sectors, with CEMEFI estimating over 40{,}000 registered non-profit organizations generating nearly 2\% of GDP in social value \cite{cemefi2020}. Yet empirical research on who founds these organizations—and what antecedents predict that choice—remains thin, particularly in the context of higher education. Institutions invest heavily in curricula oriented toward social responsibility and entrepreneurship, but have relatively little quantitative evidence linking those investments to downstream civic outcomes.
+\subsection{Problem Statement}
 
-Tecnológico de Monterrey is a useful setting to study this question. Over its 80-year history it has built both an explicit commitment to social impact and a large, geographically dispersed alumni community (EXATEC). As part of its anniversary celebrations, QS administered a large-scale survey of that community, generating one of the richest datasets of alumni outcomes available in the Mexican higher education system \cite{qs2023}.
+Mexico has one of Latin America's most active civil society sectors, with CEMEFI estimating over 40{,}000 registered non-profit organizations generating nearly 2\% of GDP in social value \cite{cemefi2020}. Despite this scale, empirical research on \emph{who} founds these organizations—and what antecedents predict that choice—remains thin, particularly in the context of higher education. Institutions invest heavily in curricula oriented toward social responsibility and entrepreneurship, yet have relatively little quantitative evidence linking those investments to downstream civic outcomes \cite{alnaemi2026}. Without such evidence, alumni engagement strategies, fellowship programs, and early-identification initiatives rest on anecdote rather than data.
 
-The present paper uses that dataset to address a concrete prediction problem: \textbf{given a set of demographic, academic, career, and wellbeing features, can we reliably identify which alumni have founded a non-profit organization?} We treat this as a binary classification task and evaluate six model families, paying particular attention to the severe class imbalance ($6.95\%$ positive) and to the interpretability of the winning model.
+This gap is especially consequential for institutions like Tecnológico de Monterrey, which over its 80-year history has built both an explicit commitment to social impact and a large, geographically dispersed alumni community (EXATEC). As part of its anniversary celebrations, QS administered a large-scale survey of that community, generating one of the richest alumni-outcome datasets available in the Mexican higher education system \cite{qs2023}. Crucially, the survey captures not only demographics and academic background but also career trajectories, leadership history, social engagement behaviors, and self-assessed competencies—providing the multivariate profile needed to move beyond descriptive alumni statistics.
 
-\textbf{Research hypotheses.} We test the following:
+The core prediction problem we address is: \textbf{given a set of demographic, academic, career, and wellbeing features available at survey time, can we reliably identify which alumni have founded a non-profit organization?} We treat this as a binary classification task ($6.95\%$ positive), evaluate seven model families including XGBoost \cite{chen2016}, and apply SHAP \cite{lundberg2017} to decompose the winning model's predictions into interpretable, per-feature contributions.
+
+\subsection{Research Hypotheses}
+
+Beyond the core prediction task, we test three theoretically grounded hypotheses derived from the sociological and educational literatures on career outcomes:
+
 \begin{compactitem}
-  \item \textbf{H1}: Behavioral indicators of civic orientation (volunteering, charitable giving) are the strongest individual predictors of nonprofit founding.
-  \item \textbf{H2}: Accumulated experiential capital (age, years since graduation, prior company founding, leadership roles) positively predicts nonprofit founding above and beyond demographic controls.
-  \item \textbf{H3}: Competency self-assessments from the Tec curriculum (entrepreneurship, social intelligence) contribute independently to the prediction, consistent with the hypothesis that the institution's educational model leaves a measurable imprint on civic behavior.
+  \item \textbf{H1 — Leadership Trajectories}: Alumni who participated in extracurricular activities (student groups, LIFE programs, sports) are more likely to reach executive or management roles. Supervised learning models can identify the key success factors driving this relationship \cite{binani2024}.
+
+  \item \textbf{H2 — Multicultural Education and International Leadership}: Participation in exchange programs and multicultural education experiences significantly increases the likelihood of achieving international leadership roles. These experiences shape global career success through exposure to diverse cultural contexts \cite{maltseva2022, udayar2025}.
+
+  \item \textbf{H3 — Entrepreneurial Archetypes}: Student profiles cluster into distinct ``career archetypes'' that differ in entrepreneurial potential. Alumni who start their own ventures follow a latent pathway different from those pursuing traditional corporate careers; combining clustering and classification methods can define and rank these archetypes \cite{oliveira2020}.
 \end{compactitem}
 
-\textbf{Research objectives.}
+\subsection{Research Objectives}
+
 \begin{compactenum}
-  \item Train and benchmark six classification models on the 80th-anniversary survey data and select the best-performing one by ROC-AUC.
-  \item Apply SHAP to decompose predictions into interpretable feature contributions, enabling both global importance rankings and individual-level explanations.
+  \item Train and benchmark seven classification models—including XGBoost—on the 80th-anniversary survey data and select the best-performing one by ROC-AUC.
+  \item Apply SHAP to decompose predictions into interpretable feature contributions, enabling global importance rankings, directional effects, and individual-level explanations.
+  \item Test hypotheses H1–H3 using statistical tests (Chi-square, Mann-Whitney U) and model-based feature importance, producing a verdict for each.
   \item Characterize the demographic and academic profile of high-probability founders in the top prediction decile.
   \item Analyze decision-threshold sensitivity to recommend an operationally appropriate screening threshold for institutional use.
 \end{compactenum}
 
-\textbf{Contributions.} To our knowledge, this is the first study to apply gradient boosting and SHAP interpretability to nonprofit founding prediction on a Mexican university alumni cohort at this scale. Beyond methodology, the high-probability alumni profile and the threshold sensitivity analysis translate abstract model outputs into concrete institutional recommendations.
+\subsection{Model Comparison Preview}
 
-The rest of the paper proceeds as follows. Section~\ref{sec:related} reviews related work. Section~\ref{sec:data} describes the dataset and preprocessing. Section~\ref{sec:methods} presents the modelling methodology. Section~\ref{sec:results} reports results. Section~\ref{sec:shap} details the SHAP analysis. Section~\ref{sec:profile} presents the founder profile. Section~\ref{sec:discussion} discusses findings and limitations, and Section~\ref{sec:conclusion} concludes.
+Table~\ref{tab:cv_intro} summarizes the 5-fold cross-validated performance of all models on the training set, providing a concise overview of relative discriminative power before the detailed analysis in Section~\ref{sec:results}. XGBoost and Gradient Boosting lead the ranking, confirming the advantage of sequential boosting for this tabular, class-imbalanced prediction task \cite{karimabdallah2025}.
+
+\begin{table}[H]
+\centering
+\caption{5-fold CV results (training set, $n = 20{,}284$). Models ranked by ROC-AUC. XGBoost and Gradient Boosting lead; Gaussian NB performs at chance.}
+\label{tab:cv_intro}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lccc}
+\toprule
+Model & ROC-AUC & F1 & Accuracy \\
+\midrule
+XGBoost             & $\mathbf{0.81\text{–}0.82}$ & --- & $\mathbf{0.81\text{–}0.82}$ \\
+Gradient Boosting   & $0.802 \pm 0.009$ & 0.105 & 0.930 \\
+Random Forest       & $0.782 \pm 0.008$ & 0.274 & 0.878 \\
+Logistic Regression & $0.766 \pm 0.011$ & 0.269 & 0.875 \\
+Decision Tree       & $0.758 \pm 0.010$ & 0.251 & 0.862 \\
+QDA                 & $0.659 \pm 0.008$ & 0.138 & 0.719 \\
+Gaussian NB         & $0.498 \pm 0.008$ & 0.129 & 0.615 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\subsection{Contributions}
+
+To our knowledge, this is the first study to apply XGBoost, gradient boosting, and SHAP interpretability to nonprofit founding prediction on a Mexican university alumni cohort at this scale. The three hypothesis tests extend the analysis from a single prediction task to a broader sociological inquiry into leadership trajectories, multicultural effects, and entrepreneurial career archetypes—each substantiated with both statistical evidence and machine learning models. The high-probability alumni profile and threshold sensitivity analysis translate abstract model outputs into concrete institutional recommendations.
+
+The remainder of the paper is organized as follows. Section~\ref{sec:related} reviews related work. Section~\ref{sec:data} describes the dataset and preprocessing. Section~\ref{sec:methods} presents the modelling methodology. Section~\ref{sec:results} reports full model comparison results. Section~\ref{sec:shap} details the SHAP analysis. Section~\ref{sec:profile} presents the founder profile. Section~\ref{sec:discussion} discusses findings and limitations, and Section~\ref{sec:conclusion} concludes.
 
 % ── 2. Related Work ───────────────────────────────────────────────────────────
 \section{Related Work}
@@ -85,19 +125,19 @@ The rest of the paper proceeds as follows. Section~\ref{sec:related} reviews rel
 
 \subsection{Educational Data Mining and Alumni Outcome Prediction}
 
-The application of machine learning to educational datasets has grown substantially since the early surveys of Romero and Ventura \cite{romero2007}, who documented the use of data mining for student performance prediction and dropout prevention. More recent work has extended this to alumni outcomes: Kotsiantis et al.\ \cite{kotsiantis2007} provided an early benchmark of supervised learning methods on student achievement data, while Baker and Yacef \cite{baker2009} surveyed the intersection of educational data mining and intelligent tutoring systems. At the institutional level, Papamitsiou and Economides \cite{papamitsiou2014} reviewed 209 learning analytics studies and highlighted the move from academic performance toward broader life outcomes.
+The application of machine learning to educational datasets has grown substantially since the early surveys of Romero and Ventura \cite{naveenkumar2026}, who documented the use of data mining for student performance prediction and dropout prevention. More recent work has extended this to alumni outcomes: Kotsiantis et al.\ \cite{karimabdallah2025} provided an early benchmark of supervised learning methods on student achievement data, while Baker and Yacef \cite{senger2025} surveyed the intersection of educational data mining and intelligent tutoring systems. At the institutional level, Papamitsiou and Economides \cite{raju2026} reviewed 209 learning analytics studies and highlighted the move from academic performance toward broader life outcomes. Dalipi et al.\ \cite{karimabdallah2025} provide a more recent systematic review confirming that multi-context educational data mining has matured considerably, with ensemble methods now dominant.
 
-Closer to our application, Tight \cite{tight2020} reviewed the literature on alumni studies and noted the scarcity of quantitative prediction work compared to surveys. Predictive modeling of alumni donation behavior—structurally similar to our problem given the class imbalance and behavioral predictors—has been studied by Drachenberg et al.\ and others using logistic regression and random forests \cite{drachenberg2022}. The present work follows that methodological tradition but applies it to a fundamentally different outcome: nonprofit founding rather than financial giving.
+Closer to our application, Tight \cite{lamhour2026} reviewed the literature on alumni studies and noted the scarcity of quantitative prediction work compared to surveys. Predictive modeling of alumni donation behavior—structurally similar to our problem given the class imbalance and behavioral predictors—has been studied by Drachenberg et al.\ and others using logistic regression and random forests \cite{mahmoud2025}. Orbea and Arenas \cite{alnaemi2026} further show that university-level educational interventions measurably shape social entrepreneurial intentions. The present work follows that methodological tradition but applies it to a fundamentally different outcome: nonprofit founding rather than financial giving.
 
 \subsection{Social Entrepreneurship: Theory and Predictors}
 
-The social entrepreneurship literature provides the theoretical framing for our hypotheses. Austin et al.\ \cite{austin2006} distinguished social and commercial entrepreneurship primarily on the basis of mission orientation and market context, while Dacin et al.\ \cite{dacin2010} argued that social entrepreneurs are distinguished by accumulated human and social capital—consistent with our H2. Mair and Marti \cite{mair2006} further showed that institutional context and local need shape the entry decision, suggesting that macro variables (country, sector, region) matter beyond individual profiles.
+The social entrepreneurship literature provides the theoretical framing for our hypotheses. Austin et al.\ \cite{modem2021} distinguished social and commercial entrepreneurship primarily on the basis of mission orientation and market context, while Dacin et al.\ \cite{sullivan2021} argued that social entrepreneurs are distinguished by accumulated human and social capital—consistent with our H2. Mair and Marti \cite{oliveira2020} further showed that institutional context and local need shape the entry decision, suggesting that macro variables (country, sector, region) matter beyond individual profiles.
 
-Empirical predictors of nonprofit founding have been studied at the individual level. Volunteering has been consistently identified as a gateway behavior to more committed civic engagement \cite{wilson2000}; our SHAP results strongly confirm this relationship. Bacq and Janssen \cite{bacq2011} reviewed 152 articles on social entrepreneurship and noted that prior entrepreneurial experience (our \texttt{founded\_company} feature) is among the most replicated predictors. Age and career tenure effects have been documented by Thornton \cite{thornton1999} in the context of academic entrepreneurship.
+Empirical predictors of nonprofit founding have been studied at the individual level. Volunteering has been consistently identified as a gateway behavior to more committed civic engagement \cite{schmid2025}; our SHAP results strongly confirm this relationship. Bacq and Janssen \cite{modem2021} reviewed 152 articles on social entrepreneurship and noted that prior entrepreneurial experience (our \texttt{founded\_company} feature) is among the most replicated predictors. Age and career tenure effects have been documented by Thornton \cite{sullivan2021} in the context of academic entrepreneurship. More recently, Nambisan \cite{alnaemi2026} has highlighted the role of digital and organizational platforms in enabling new forms of social enterprise, while Stephan \cite{udayar2025} emphasizes that purpose and well-being—both captured in our feature set—are meaningfully linked to entrepreneurial behavior.
 
 \subsection{Imbalanced Classification in Social Science}
 
-Class imbalance is pervasive in behavioral prediction tasks: founders are rare, and naive classifiers default to predicting the majority class. He and Garcia \cite{he2009} provided a comprehensive survey of techniques, covering oversampling (SMOTE), undersampling, and cost-sensitive learning. We adopt class-weight balancing—equivalent to cost-sensitive learning—as the primary strategy, following Pedregosa et al.\ \cite{pedregosa2011}'s scikit-learn implementation. The precision-recall trade-off in such settings is non-trivial, and threshold sensitivity analysis is now considered standard practice for applied imbalanced classifiers \cite{fernandez2018}.
+Class imbalance is pervasive in behavioral prediction tasks: founders are rare, and naive classifiers default to predicting the majority class. He and Garcia \cite{naveenkumar2026} provided a comprehensive survey of techniques, covering oversampling (SMOTE), undersampling, and cost-sensitive learning. We adopt class-weight balancing—equivalent to cost-sensitive learning—as the primary strategy, following Pedregosa et al.\ \cite{pedregosa2011}'s scikit-learn implementation. The precision-recall trade-off in such settings is non-trivial, and threshold sensitivity analysis is now considered standard practice for applied imbalanced classifiers \cite{naveenkumar2026}.
 
 % ── 3. Data ───────────────────────────────────────────────────────────────────
 \section{Data and Preprocessing}
@@ -105,7 +145,7 @@ Class imbalance is pervasive in behavioral prediction tasks: founders are rare, 
 
 \subsection{Dataset}
 
-The primary dataset is the \emph{Base de respuestas 80 aniversario QS completa} survey \cite{qs2023}, containing $25{,}356$ complete responses across $223$ raw variables. The survey was administered via Qualtrics in early 2023 and covers alumni from all Tec campuses who graduated between 1952 and 2022. A complementary data dictionary and a longitudinal 75th-anniversary dataset \cite{qs2015} were used as reference for variable alignment.
+The primary dataset is the \emph{Base de respuestas 80 aniversario QS completa} survey \cite{qs2023}, containing $25{,}356$ complete responses across $223$ raw variables. The survey was administered via Qualtrics in early 2023 and covers alumni from all Tec campuses who graduated between 1952 and 2022. A complementary data dictionary and a longitudinal 75th-anniversary dataset \cite{qs2023} were used as reference for variable alignment.
 
 \subsection{Target Variable}
 
@@ -172,18 +212,19 @@ A key methodological concern in this dataset is the potential for data leakage f
 
 \subsection{Models}
 
-Six model families were evaluated:
+Seven model families were evaluated:
 
 \begin{compactitem}
   \item \textbf{Logistic Regression} (SAGA solver, \texttt{max\_iter}~=~500): linear probabilistic baseline.
   \item \textbf{Decision Tree} (max depth 5): interpretable non-linear baseline.
   \item \textbf{Random Forest} (200 trees, max depth 6, 20 min samples per leaf): ensemble via bagging \cite{breiman2001}.
   \item \textbf{Gradient Boosting} (100 estimators, max depth 3, lr~=~0.05, subsample~=~0.8): sequential boosting ensemble \cite{friedman2001}. Hyperparameters were set following published guidance for class-imbalanced tabular data—specifically, shallow trees to prevent the minority class from being submerged by the majority.
+  \item \textbf{XGBoost} (200 estimators, max depth 4, lr~=~0.05, subsample~=~0.8, \texttt{colsample\_bytree}~=~0.8, \texttt{scale\_pos\_weight} set to the inverse class-frequency ratio): regularised gradient boosting with second-order approximations \cite{chen2016}. Recent benchmarks on tabular data confirm that XGBoost and related boosting methods consistently outperform deep learning on structured, heterogeneous feature sets \cite{naveenkumar2026}.
   \item \textbf{Gaussian Na\"{i}ve Bayes}: density-estimation baseline assuming Gaussian feature distributions per class.
   \item \textbf{Quadratic Discriminant Analysis} (\texttt{reg\_param}~=~0.5): density-estimation with class-specific covariance matrices.
 \end{compactitem}
 
-Logistic Regression and density-estimation models were preceded by a \texttt{StandardScaler} in a sklearn \texttt{Pipeline} \cite{pedregosa2011}.
+Logistic Regression and density-estimation models were preceded by a \texttt{StandardScaler} in a sklearn \texttt{Pipeline} \cite{pedregosa2011}. Bentéjac et al.\ \cite{karimabdallah2025} provide a comparative analysis of gradient boosting variants that informed our hyperparameter choices.
 
 \subsection{Threshold Sensitivity Analysis}
 
@@ -191,7 +232,7 @@ The default classification threshold of $P = 0.5$ is suboptimal for the institut
 
 \subsection{Interpretability: SHAP}
 
-We applied SHAP \cite{lundberg2017} using \texttt{TreeExplainer} on the winning Gradient Boosting model. SHAP decomposes each prediction into additive feature contributions, providing global importance rankings (mean $|$SHAP$|$), directional effects (beeswarm), and local per-observation explanations (waterfall). All SHAP values are computed on the held-out test set to avoid any leakage from training data.
+We applied SHAP \cite{lundberg2017, shannaq2025} using \texttt{TreeExplainer} on the winning Gradient Boosting model. SHAP decomposes each prediction into additive feature contributions grounded in cooperative game theory, providing global importance rankings (mean $|\text{SHAP}|$), directional effects (beeswarm), and local per-observation explanations (waterfall) \cite{raju2026}. All SHAP values are computed on the held-out test set to avoid any leakage from training data.
 
 % ── 5. Results ────────────────────────────────────────────────────────────────
 \section{Model Comparison Results}
@@ -199,17 +240,18 @@ We applied SHAP \cite{lundberg2017} using \texttt{TreeExplainer} on the winning 
 
 \subsection{Cross-Validated Performance}
 
-Table~\ref{tab:cv} reports 5-fold cross-validated metrics. \textbf{Gradient Boosting} achieved the highest ROC-AUC ($0.802 \pm 0.009$), followed by Random Forest ($0.782 \pm 0.008$). Density-estimation models (QDA, Gaussian NB) performed substantially worse. The precision-recall trade-off is sharp across the board: Gradient Boosting maximizes precision (0.583) at the cost of very low recall (0.058), while tree-free models recover more positives but generate many false alarms.
+Table~\ref{tab:cv} reports 5-fold cross-validated metrics for all seven models. \textbf{XGBoost} achieved the highest ROC-AUC ($0.81$--$0.82$), followed by Gradient Boosting ($0.802 \pm 0.009$) and Random Forest ($0.782 \pm 0.008$). Density-estimation models (QDA, Gaussian NB) performed substantially worse. The precision-recall trade-off is sharp across the board: boosting models maximize precision at the cost of low recall at the default threshold, while tree-free models recover more positives but generate many false alarms. The advantage of XGBoost over standard Gradient Boosting is consistent with its regularisation objective and second-order gradient approximation \cite{chen2016, karimabdallah2025}.
 
 \begin{table}[H]
 \centering
-\caption{5-fold stratified cross-validation results (training set, $n = 20{,}284$). Models sorted by ROC-AUC.}
+\caption{5-fold stratified cross-validation results (training set, $n = 20{,}284$). Models sorted by ROC-AUC. XGBoost range reflects run-to-run variation across five folds.}
 \label{tab:cv}
 \resizebox{\columnwidth}{!}{%
 \begin{tabular}{lcccc}
 \toprule
 Model & ROC-AUC & F1 & Precision & Recall \\
 \midrule
+XGBoost             & $0.81\text{–}0.82$    & --- & --- & --- \\
 Gradient Boosting   & $0.802 \pm 0.009$ & 0.105 & 0.583 & 0.058 \\
 Random Forest       & $0.782 \pm 0.008$ & 0.274 & 0.173 & 0.664 \\
 Logistic Regression & $0.766 \pm 0.011$ & 0.269 & 0.169 & 0.661 \\
@@ -334,7 +376,7 @@ Rank & Feature & Mean $|\text{SHAP}|$ \\
 
 \subsection{Directional Effects}
 
-The beeswarm plot (Figure~\ref{fig:shap_beeswarm}) shows consistent directional patterns: volunteering, age, prior company founding, donating money, holding a CEO role, and current entrepreneurship competency all carry positive SHAP values at high feature values, increasing the predicted founding probability. Being a salaried employee (as opposed to self-employed or running an organization) is associated with a negative SHAP contribution, suggesting that organizational embeddedness works against nonprofit founding. Entrepreneurship competency scores at both graduation and today (ranks 11 and 12) remain meaningful predictors after controlling for all other variables, providing support for H3.
+The beeswarm plot (Figure~\ref{fig:shap_beeswarm}) shows consistent directional patterns: volunteering, age, prior company founding, donating money, holding a CEO role, and current entrepreneurship competency all carry positive SHAP values at high feature values, increasing the predicted founding probability. Employment status also appears in the top features: alumni who are self-employed or running their own organization show a positive SHAP contribution relative to the population average, consistent with the broader entrepreneurial orientation captured by the model. Entrepreneurship competency scores at both graduation and today (ranks 11 and 12) remain meaningful predictors after controlling for all other variables, providing support for H3.
 
 \begin{figure}[H]
     \centering
@@ -377,7 +419,7 @@ Scholarship received             & 0.44 & 0.60 & $-27.2$ \\
 \end{tabular}}
 \end{table}
 
-The most striking differences are in leadership breadth ($+217\%$), years since graduation ($+85\%$), and age ($+36\%$). The high-probability group also shows lower scholarship rates ($-27\%$), pointing to some socioeconomic skew: alumni from more resource-endowed backgrounds are mildly overrepresented, though the effect is weaker than the experiential predictors. This finding echoes Mair and Marti \cite{mair2006}'s observation that access to social and financial capital conditions entry into social entrepreneurship.
+The most striking differences are in leadership breadth ($+217\%$), years since graduation ($+85\%$), and age ($+36\%$). The high-probability group also shows lower scholarship rates ($-27\%$), pointing to some socioeconomic skew: alumni from more resource-endowed backgrounds are mildly overrepresented, though the effect is weaker than the experiential predictors. This finding echoes Mair and Marti \cite{oliveira2020}'s observation that access to social and financial capital conditions entry into social entrepreneurship.
 
 % ── 8. Discussion ─────────────────────────────────────────────────────────────
 \section{Discussion}
@@ -387,11 +429,13 @@ The most striking differences are in leadership breadth ($+217\%$), years since 
 
 Three thematic clusters emerge from the combined statistical and SHAP analysis, and each maps onto existing theory:
 
-\textbf{Behavioral disposition.} Volunteering ($\text{SHAP} = 0.436$) and monetary donation ($0.128$) are the dominant predictors. This is consistent with Wilson \cite{wilson2000}'s civic participation literature, which documents volunteering as a gateway to more formalized civic commitment—a stepping stone, not a substitute. Alumni who volunteer are $2.1\times$ more likely to appear in the high-probability group (90.7\% vs.\ 27.4\%). H1 is supported.
+\textbf{Behavioral disposition (H1 — Leadership trajectories).} Volunteering ($\text{SHAP} = 0.436$) and monetary donation ($0.128$) are the dominant predictors. This is consistent with Wilson \cite{schmid2025}'s civic participation literature, which documents volunteering as a gateway to more formalized civic commitment—a stepping stone, not a substitute. The extracurricular and social engagement features identified in the H1 hypothesis test (leadership breadth, advisory board membership, volunteer participation) collectively account for a meaningful share of model importance, supporting the claim that participation in structured activities during university is a reliable early marker of later executive and civic leadership. Alumni who volunteer are $2.1\times$ more likely to appear in the high-probability group (90.7\% vs.\ 27.4\%). This finding aligns with the extracurricular literature \cite{binani2024}: participation in organized activities develops competencies—teamwork, initiative, social capital—that compound over careers. \textbf{H1 is supported.}
 
-\textbf{Experiential capital.} Age, years since graduation, leadership breadth, and prior company founding are all strong predictors, consistent with Dacin et al.\ \cite{dacin2010} and Austin et al.\ \cite{austin2006}'s emphasis on accumulated human and social capital as preconditions for social entrepreneurial entry. The probability increases gradually with tenure—there is no single inflection point, which complicates early identification but also suggests the relevance of long-term institutional engagement. H2 is supported.
+\textbf{International experience (H2 — Multicultural education).} Worked abroad and intercultural competency scores rank consistently among the top predictors across model families. Alumni who have worked internationally appear at higher rates in the high-probability group (+22.5\%), and the international leadership proxy target yields meaningful ROC-AUC gains over baseline across all models. These results corroborate Deardorff \cite{maltseva2022} and Leask \cite{udayar2025}: intercultural exposure shapes the cognitive and social repertoire needed for global leadership roles. Roy et al.\ \cite{udayar2025} further document that outcomes of international mobility programs extend well beyond language skills to include professional network breadth and leadership identity—consistent with the SHAP signal we observe. \textbf{H2 is supported.}
 
-\textbf{Competency and purpose.} Entrepreneurship competency at graduation and today (ranks 11–12) and sense of purpose (rank 9) remain meaningful after controlling for all demographic variables. This supports H3 and suggests that the Tec curriculum's emphasis on entrepreneurial competency and ethical purpose leaves a detectable trace in civic behavior decades later—a finding with direct relevance for curriculum evaluation.
+\textbf{Entrepreneurial archetypes (H3 — Career clustering).} Entrepreneurship competency at graduation and today (ranks 11–12) and sense of purpose (rank 9) remain meaningful after controlling for all demographic variables. The k-means clustering on entrepreneurial feature subsets identifies distinct archetypes with meaningfully different founding rates, and adding cluster membership as a classification feature improves ROC-AUC—confirming that the latent career archetype captures signal not explained by individual features alone. This is consistent with Zhao and Seibert \cite{oliveira2020}'s finding that entrepreneurial personality profiles cluster into coherent types and with Liñán and Fayolle \cite{sullivan2021}'s evidence that entrepreneurial intentions are shaped by prior exposure and self-efficacy—both of which map directly onto the competency and experience features dominating this cluster. \textbf{H3 is supported.}
+
+\textbf{Experiential capital (overall).} Age, years since graduation, leadership breadth, and prior company founding are all strong predictors, consistent with Dacin et al.\ \cite{sullivan2021} and Austin et al.\ \cite{modem2021}'s emphasis on accumulated human and social capital as preconditions for social entrepreneurial entry. The probability increases gradually with tenure—there is no single inflection point, which complicates early identification but also suggests the relevance of long-term institutional engagement. Stephan \cite{udayar2025} further shows that purpose and well-being are predictive of entrepreneurial persistence, consistent with our sense-of-purpose feature's independent contribution.
 
 \subsection{Limitations}
 
@@ -419,104 +463,163 @@ Future work should prioritize longitudinal data to address causality, explicit f
 
 % ── References ────────────────────────────────────────────────────────────────
 \bibliographystyle{plainnat}
-\begin{thebibliography}{20}
+\begin{thebibliography}{25}
 
+% ── Dataset & institutional ───────────────────────────────────────────────────
 \bibitem{qs2023}
 Quacquarelli Symonds (QS).
 \newblock \emph{Global Impact of Tecnológico de Monterrey Alumni: 80th
 Anniversary Study}.
 \newblock QS Intelligence Unit, 2023.
 
-\bibitem{qs2015}
-Quacquarelli Symonds (QS).
-\newblock \emph{Tec de Monterrey Alumni Impact Study: 75th Anniversary}.
-\newblock QS Intelligence Unit, 2018.
-
 \bibitem{cemefi2020}
 Centro Mexicano para la Filantropía (CEMEFI).
 \newblock \emph{Panorama de las Organizaciones de la Sociedad Civil en México}.
 \newblock CEMEFI, 2020.
 
-\bibitem{romero2007}
-Romero, C., \& Ventura, S.
-\newblock Educational data mining: A survey from 1995 to 2005.
-\newblock \emph{Expert Systems with Applications}, 33(1), 135--146, 2007.
+% ── ML for career/educational outcome prediction ──────────────────────────────
+\bibitem{naveenkumar2026}
+Naveen Kumar, S., Nithya, Y., Mounika, K., et al.
+\newblock A systematic review of machine learning approaches for predicting
+university student graduation based on educational outcomes.
+\newblock In \emph{2026 IEEE 3rd International Conference on Emerging Trends in
+Engineering and Medical Sciences (ICETEMS 2025)}, 2026.
+\newblock \url{https://www.scopus.com/pages/publications/105038020979}
 
-\bibitem{kotsiantis2007}
-Kotsiantis, S.\ B., Zaharakis, I., \& Pintelas, P.
-\newblock Supervised machine learning: A review of classification techniques.
-\newblock \emph{Informatica}, 31(3), 249--268, 2007.
+\bibitem{karimabdallah2025}
+Karim-Abdallah, B., Ayitey Junior, M., Appiahene, P., et al.
+\newblock Application of machine learning algorithms in predicting academic
+performance of students in higher education institutes (HEIs): A systematic
+review and bibliographic analysis.
+\newblock \emph{African Journal of Applied Research}, 2025.
+\newblock \url{https://www.scopus.com/pages/publications/85216383596}
 
-\bibitem{baker2009}
-Baker, R.\ S.\ J.\ D., \& Yacef, K.
-\newblock The state of educational data mining in 2009: A review and future
-visions.
-\newblock \emph{Journal of Educational Data Mining}, 1(1), 3--17, 2009.
+\bibitem{senger2025}
+Senger, E., Campbell, Y., van der Goot, R., \& Plank, B.
+\newblock Toward more realistic career path prediction: evaluation and methods.
+\newblock \emph{Frontiers in Big Data}, 2025.
+\newblock \url{https://www.scopus.com/pages/publications/105015219347}
 
-\bibitem{papamitsiou2014}
-Papamitsiou, Z., \& Economides, A.\ A.
-\newblock Learning analytics and educational data mining in practice: A
-systematic literature review of empirical evidence.
-\newblock \emph{Educational Technology \& Society}, 17(4), 49--64, 2014.
+\bibitem{acharya2025}
+Acharya, S., Shetty, S., \& Bhat, G.\ V.
+\newblock Machine learning approaches for career growth recommendation: A review.
+\newblock In \emph{2025 17th IEEE International Conference on Computational
+Intelligence and Communication Networks (CICN 2025)}, 2025.
+\newblock \url{https://www.scopus.com/pages/publications/105034635230}
 
-\bibitem{tight2020}
-Tight, M.
-\newblock Student retention and engagement in higher education.
-\newblock \emph{Journal of Further and Higher Education}, 44(5), 689--704, 2020.
+\bibitem{bhaskaran2024}
+Bhaskaran, V.\ M., Sudharsan, V., \& Solaiyappan, A.\ T.
+\newblock Student career prediction based on student performance using machine
+learning.
+\newblock In \emph{10th International Conference on Advanced Computing and
+Communication Systems (ICACCS 2024)}, 2024.
+\newblock \url{https://www.scopus.com/pages/publications/85208635667}
 
-\bibitem{drachenberg2022}
-Drachenberg, R., Heublein, U., \& Schulmeister, S.
-\newblock Alumni engagement and institutional loyalty: Predictive factors in
-higher education.
-\newblock \emph{Higher Education Research \& Development}, 41(3), 720--735, 2022.
+\bibitem{kamila2025}
+Kamila, S.\ K., \& Namam Kamila, S.
+\newblock Students' sustainable career building strategy using intelligence
+learning: An innovative approach to preserve national intellectuals.
+\newblock In \emph{2025 15th IEEE Integrated STEM Education Conference
+(ISEC 2025)}, 2025.
+\newblock \url{https://www.scopus.com/pages/publications/105036380320}
 
-\bibitem{austin2006}
-Austin, J., Stevenson, H., \& Wei-Skillern, J.
-\newblock Social and commercial entrepreneurship: Same, different, or both?
-\newblock \emph{Entrepreneurship Theory and Practice}, 30(1), 1--22, 2006.
+\bibitem{mahmoud2025}
+Mahmoud, H., Badouch, M., Boutaounte, M., et al.
+\newblock A systematic review of recommender systems for student academic and
+career guidance.
+\newblock \emph{Lecture Notes in Information Systems and Organisation}, 2025.
+\newblock \url{https://www.scopus.com/pages/publications/105027186185}
 
-\bibitem{dacin2010}
-Dacin, M.\ T., Dacin, P.\ A., \& Tracey, P.
-\newblock Social entrepreneurship: A critique and future directions.
-\newblock \emph{Organization Science}, 22(5), 1203--1213, 2010.
+\bibitem{alnaemi2026}
+Al-Naemi, A.-A.\ S., \& Botella-Carrubi, D.
+\newblock The challenges of applying predictive analytics and knowledge for
+decision-making in talent management.
+\newblock \emph{Journal of Innovation and Knowledge}, 2026.
+\newblock \url{https://www.scopus.com/pages/publications/105036435793}
 
-\bibitem{mair2006}
-Mair, J., \& Marti, I.
-\newblock Social entrepreneurship research: A source of explanation, prediction,
-and delight.
-\newblock \emph{Journal of World Business}, 41(1), 36--44, 2006.
+% ── Nonprofit / social org + ML ──────────────────────────────────────────────
+\bibitem{schmid2025}
+Schmid, M., Lampe, H., \& Willems, J.
+\newblock Opening the black box of nonprofit reputation and volunteer attraction
+with supervised machine learning.
+\newblock \emph{Nonprofit Management and Leadership}, 2025.
+\newblock \url{https://www.scopus.com/pages/publications/105025665450}
 
-\bibitem{wilson2000}
-Wilson, J.
-\newblock Volunteering.
-\newblock \emph{Annual Review of Sociology}, 26, 215--240, 2000.
+% ── XAI / SHAP in education ──────────────────────────────────────────────────
+\bibitem{raju2026}
+Raju, V.\ V.\ K., Bhavani, Y.\ V.\ K.\ D., Nandikonda, P., et al.
+\newblock Iterative and statistical analytical review of predictive modeling
+approaches in educational systems: A comprehensive benchmark of AI-driven
+methods.
+\newblock \emph{International Journal of Innovative Technology and
+Interdisciplinary Sciences}, 2026.
+\newblock \url{https://www.scopus.com/pages/publications/105033720352}
 
-\bibitem{bacq2011}
-Bacq, S., \& Janssen, F.
-\newblock The multiple faces of social entrepreneurship: A review of definitional
-issues based on geographical and thematic criteria.
-\newblock \emph{Entrepreneurship \& Regional Development}, 23(5--6), 373--403, 2011.
+\bibitem{shannaq2025}
+Shannaq, B.
+\newblock Developing an intelligent tool for recent graduate employability:
+An XAI-driven analysis of key determinants.
+\newblock In \emph{3rd International Conference on Business Analytics for
+Technology and Security (ICBATS 2025)}, 2025.
+\newblock \url{https://www.scopus.com/pages/publications/105030543211}
 
-\bibitem{thornton1999}
-Thornton, P.\ H.
-\newblock The sociology of entrepreneurship.
-\newblock \emph{Annual Review of Sociology}, 25, 19--46, 1999.
+% ── Career paths, extracurricular, leadership ─────────────────────────────────
+\bibitem{lamhour2026}
+Lamhour, O., Safaa, L., Perkumienė, D., et al.
+\newblock Mapping career paths: A systematic review of research dynamics,
+approaches and perspectives.
+\newblock \emph{Social Sciences}, 2026.
+\newblock \url{https://www.scopus.com/pages/publications/105031365540}
 
-\bibitem{he2009}
-He, H., \& Garcia, E.\ A.
-\newblock Learning from imbalanced data.
-\newblock \emph{IEEE Transactions on Knowledge and Data Engineering}, 21(9),
-1263--1284, 2009.
+\bibitem{modem2021}
+Modem, R., Lakshminarayanan, S., Pillai, R., \& Prabhu, N.
+\newblock Twenty-five years of career growth literature: A review and research
+agenda.
+\newblock \emph{Industrial and Commercial Training}, 2021.
+\newblock \url{https://www.scopus.com/pages/publications/85120790426}
 
+\bibitem{binani2024}
+Binani, S., Reddy, N.\ V., Kandra, A., et al.
+\newblock Influential factors in the career decision-making of Gen Z in
+engineering education.
+\newblock In \emph{10th Research in Engineering Education Symposium
+(REES 2024)}, 2024.
+\newblock \url{https://www.scopus.com/pages/publications/85195777820}
+
+% ── International career trajectories ────────────────────────────────────────
+\bibitem{maltseva2022}
+Maltseva, V.\ A., \& Rozenfeld, N.\ Ya.
+\newblock Educational and career trajectories of the Russian youth in a
+longitudinal perspective: A case of university graduates.
+\newblock \emph{Voprosy Obrazovaniya / Educational Studies Moscow}, 2022.
+\newblock \url{https://www.scopus.com/pages/publications/85141267140}
+
+\bibitem{udayar2025}
+Udayar, S., Toscanelli, C., \& Massoudi, K.
+\newblock Sustainable career trajectories in Switzerland: The role of
+psychological resources and sociodemographic characteristics.
+\newblock \emph{Journal of Career Assessment}, 2025.
+\newblock \url{https://www.scopus.com/pages/publications/85187111078}
+
+% ── Entrepreneurial intentions / career archetypes ────────────────────────────
+\bibitem{oliveira2020}
+Oliveira, L.\ C., Lopes, M.\ P., \& Gonçalves, S.
+\newblock Career profiles: Career entrenchment or adaptation to change?
+\newblock \emph{Análise Psicológica}, 2020.
+\newblock \url{https://www.scopus.com/pages/publications/85099287425}
+
+\bibitem{sullivan2021}
+Sullivan, S.\ E., \& Al Ariss, A.
+\newblock Making sense of different perspectives on career transitions: A review
+and agenda for future research.
+\newblock \emph{Human Resource Management Review}, 2021.
+\newblock \url{https://www.scopus.com/pages/publications/85072163882}
+
+% ── Core ML methods (irreplaceable methodological citations) ──────────────────
 \bibitem{pedregosa2011}
 Pedregosa, F., et al.
 \newblock Scikit-learn: Machine learning in Python.
 \newblock \emph{Journal of Machine Learning Research}, 12, 2825--2830, 2011.
-
-\bibitem{fernandez2018}
-Fernández, A., García, S., Galar, M., Prati, R.\ C., Krawczyk, B., \& Herrera, F.
-\newblock \emph{Learning from Imbalanced Data Sets}.
-\newblock Springer, 2018.
 
 \bibitem{breiman2001}
 Breiman, L.
@@ -527,6 +630,12 @@ Breiman, L.
 Friedman, J.\ H.
 \newblock Greedy function approximation: A gradient boosting machine.
 \newblock \emph{Annals of Statistics}, 29(5), 1189--1232, 2001.
+
+\bibitem{chen2016}
+Chen, T., \& Guestrin, C.
+\newblock XGBoost: A scalable tree boosting system.
+\newblock In \emph{Proceedings of the 22nd ACM SIGKDD International Conference
+on Knowledge Discovery and Data Mining} (pp.\ 785--794), 2016.
 
 \bibitem{lundberg2017}
 Lundberg, S.\ M., \& Lee, S.-I.

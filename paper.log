@@ -1,9 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.11.3)  10 JUN 2026 18:03
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.11.3)  12 JUN 2026 23:13
 entering extended mode
  restricted \write18 enabled.
+ file:line:error style messages enabled.
  %&-line parsing enabled.
-**paper.tex
-(./paper.tex
+**c:/Users/david/Documents/programming/clases_tec/my8voRetoIA/paper.tex
+(c:/Users/david/Documents/programming/clases_tec/my8voRetoIA/paper.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-10-24>
 (c:/Users/david/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/article.cls
@@ -285,31 +286,31 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \@float@everytoks=\toks27
 \@floatcapt=\box56
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 19.
+Package hyperref Info: Option `colorlinks' set `true' on input line 20.
  (c:/Users/david/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count316
 ) (./paper.aux)
 \openout1 = `paper.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 42.
-LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -351,137 +352,160 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (c:/Users/david/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-Package hyperref Info: Link coloring ON on input line 42.
+Package hyperref Info: Link coloring ON on input line 43.
  (./paper.out) (./paper.out)
 \@outlinefile=\write3
 \openout3 = `paper.out'.
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 44.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 45.
  (c:/Users/david/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 44.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 45.
  (c:/Users/david/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [1{c:/Users/david/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
+)
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [1{c:/Users/david/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 86--86
+Underfull \hbox (badness 1824) in paragraph at lines 85--86
+[]\T1/cmr/m/n/10 Train and bench-mark seven clas-si-fi-ca-tion mod-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 86--87
+\T1/cmr/m/n/10 im-por-tance rank-ings, di-rec-tional ef-fects, and
+ []
+
+
+Underfull \vbox (badness 1168) has occurred while \output is active []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 126--126
 []\T1/cmr/bx/n/12 Educational Data Min-ing and
  []
 
 
-Underfull \hbox (badness 1394) in paragraph at lines 88--89
+Underfull \hbox (badness 1394) in paragraph at lines 128--129
 \T1/cmr/m/n/10 The ap-pli-ca-tion of ma-chine learn-ing to ed-u-ca-tional
  []
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \hbox (badness 1609) in paragraph at lines 100--101
-\T1/cmr/m/n/10 tasks: founders are rare, and naive clas-si-fiers de-
- []
-
-[2]
-Underfull \hbox (badness 1354) in paragraph at lines 136--137
+[2
+pdfTeX warning (ext4): destination with the same identifier (name{table.1}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.129 
+      ] [3
+pdfTeX warning (ext4): destination with the same identifier (name{table.2}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.176   \item \textbf
+                     {Missing value handling}: Columns exceeding 60\% missin...]
+Underfull \hbox (badness 1354) in paragraph at lines 176--177
 []\T1/cmr/bx/n/10 Missing value han-dling\T1/cmr/m/n/10 : Columns ex-ceed-ing
  []
 
 
-Underfull \hbox (badness 2809) in paragraph at lines 136--137
+Underfull \hbox (badness 2809) in paragraph at lines 176--177
 \T1/cmr/m/n/10 60% miss-ing-ness were dropped (\T1/cmtt/m/n/10 years_abroad\T1/cmr/m/n/10 ,
  []
 
 
-Underfull \hbox (badness 3895) in paragraph at lines 137--138
+Underfull \hbox (badness 3895) in paragraph at lines 177--178
 []\T1/cmr/bx/n/10 Binary en-cod-ing\T1/cmr/m/n/10 : Yes/No sur-vey re-sponses
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 178--179
+Underfull \hbox (badness 10000) in paragraph at lines 218--219
 []\T1/cmr/bx/n/10 Logistic Re-gres-sion \T1/cmr/m/n/10 (SAGA solver,
  []
 
-[3
-pdfTeX warning (ext4): destination with the same identifier (name{table.1}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.182   \item \textbf
-                     {Gaussian Na\"{i}ve Bayes}: density-estimation baseline...
-pdfTeX warning (ext4): destination with the same identifier (name{table.2}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.182   \item \textbf
-                     {Gaussian Na\"{i}ve Bayes}: density-estimation baseline...]
-Underfull \hbox (badness 10000) in paragraph at lines 183--184
+
+Underfull \hbox (badness 6396) in paragraph at lines 222--223
+\T1/cmr/m/n/10 sub-sam-ple = 0.8, \T1/cmtt/m/n/10 colsample_bytree \T1/cmr/m/n/10 = 0.8,
+ []
+
+
+Underfull \hbox (badness 1158) in paragraph at lines 222--223
+\T1/cmr/m/n/10 order ap-prox-i-ma-tions [[]]. Re-cent bench-marks
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 224--225
 []\T1/cmr/bx/n/10 Quadratic Dis-crim-i-nant Anal-y-sis
  []
 
 
-Underfull \hbox (badness 7451) in paragraph at lines 183--184
+Underfull \hbox (badness 7451) in paragraph at lines 224--225
 \T1/cmr/m/n/10 (\T1/cmtt/m/n/10 reg_param \T1/cmr/m/n/10 = 0.5): density-estimation with
  []
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-<images/only_roc_auc.png, id=217, 344.9688pt x 349.305pt>
-File: images/only_roc_auc.png Graphic file (type png)
-<use images/only_roc_auc.png>
-Package pdftex.def Info: images/only_roc_auc.png  used on input line 229.
-(pdftex.def)             Requested size: 247.39655pt x 250.51335pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [4
+[4
 pdfTeX warning (ext4): destination with the same identifier (name{table.3}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.254 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.254 
-       <./images/only_roc_auc.png>]
-<images/threshold_sensitivity.png, id=232, 927.9468pt x 277.035pt>
-File: images/threshold_sensitivity.png Graphic file (type png)
-<use images/threshold_sensitivity.png>
-Package pdftex.def Info: images/threshold_sensitivity.png  used on input line 264.
-(pdftex.def)             Requested size: 247.39655pt x 73.85777pt.
+l.232 
+      ]
+<images/only_roc_auc.png, id=267, 344.9688pt x 349.305pt>
+File: images/only_roc_auc.png Graphic file (type png)
+<use images/only_roc_auc.png>
+Package pdftex.def Info: images/only_roc_auc.png  used on input line 271.
+(pdftex.def)             Requested size: 247.39655pt x 250.51335pt.
+
+Underfull \vbox (badness 1755) has occurred while \output is active []
+
  [5
 pdfTeX warning (ext4): destination with the same identifier (name{table.4}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.338 
+l.303 
       
-pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) has been already used, duplicate ignored
+pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.338 
+l.303 
       
 pdfTeX warning (ext4): destination with the same identifier (name{table.5}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.338 
+l.303 
+       <./images/only_roc_auc.png>]
+<images/threshold_sensitivity.png, id=282, 927.9468pt x 277.035pt>
+File: images/threshold_sensitivity.png Graphic file (type png)
+<use images/threshold_sensitivity.png>
+Package pdftex.def Info: images/threshold_sensitivity.png  used on input line 306.
+(pdftex.def)             Requested size: 247.39655pt x 73.85777pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+<images/shap_red_blue.png, id=286, 686.0832pt x 564.1878pt>
+File: images/shap_red_blue.png Graphic file (type png)
+<use images/shap_red_blue.png>
+Package pdftex.def Info: images/shap_red_blue.png  used on input line 383.
+(pdftex.def)             Requested size: 247.39655pt x 203.43459pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [6
+pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.389 
       
 pdfTeX warning (ext4): destination with the same identifier (name{table.6}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.338 
+l.389 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{table.7}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.389 
        <./images/threshold_sensitivity.png>]
-<images/shap_red_blue.png, id=247, 686.0832pt x 564.1878pt>
-File: images/shap_red_blue.png Graphic file (type png)
-<use images/shap_red_blue.png>
-Package pdftex.def Info: images/shap_red_blue.png  used on input line 341.
-(pdftex.def)             Requested size: 247.39655pt x 203.43459pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 350--351
+Underfull \hbox (badness 10000) in paragraph at lines 392--393
 \T1/cmr/m/n/10 The highest-probability test re-spon-dent had
  []
 
@@ -489,41 +513,143 @@ Underfull \hbox (badness 10000) in paragraph at lines 350--351
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-Underfull \hbox (badness 1694) in paragraph at lines 380--381
+Underfull \hbox (badness 1694) in paragraph at lines 422--423
 \T1/cmr/m/n/10 ($\OT1/cmr/m/n/10 +217%$\T1/cmr/m/n/10 ), years since grad-u-a-tion ($\OT1/cmr/m/n/10 +85%$\T1/cmr/m/n/10 ), and age
  []
 
-[6
+[7
 pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.393 
+l.435 
       
-pdfTeX warning (ext4): destination with the same identifier (name{table.7}) has been already used, duplicate ignored
+pdfTeX warning (ext4): destination with the same identifier (name{table.8}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.393 
-       <./images/shap_red_blue.png>] [7] [8] (./paper.aux)
+l.435 
+       <./images/shap_red_blue.png>] [8]
+Underfull \hbox (badness 1348) in paragraph at lines 482--488
+\T1/cmr/m/it/10 2025)\T1/cmr/m/n/10 , 2026.  [][]$\T1/cmtt/m/n/10 https : / / www . scopus . com / pages /
+ []
+
+
+Underfull \hbox (badness 3128) in paragraph at lines 504--509
+\T1/cmr/m/it/10 In-ter-na-tional Con-fer-ence on Com-pu-ta-tional In-
+ []
+
+
+Underfull \hbox (badness 2486) in paragraph at lines 504--509
+\T1/cmr/m/it/10 tel-li-gence and Com-mu-ni-ca-tion Net-works (CICN
+ []
+
+
+Underfull \hbox (badness 1348) in paragraph at lines 504--509
+\T1/cmr/m/it/10 2025)\T1/cmr/m/n/10 , 2025.  [][]$\T1/cmtt/m/n/10 https : / / www . scopus . com / pages /
+ []
+
+
+Underfull \hbox (badness 2103) in paragraph at lines 511--517
+\T1/cmr/m/n/10 pan, A. T.  Stu-dent ca-reer pre-dic-tion based
+ []
+
+
+Underfull \hbox (badness 3179) in paragraph at lines 511--517
+\T1/cmr/m/n/10 In \T1/cmr/m/it/10 10th In-ter-na-tional Con-fer-ence on Ad-vanced
+ []
+
+
+Underfull \hbox (badness 1348) in paragraph at lines 511--517
+\T1/cmr/m/it/10 2024)\T1/cmr/m/n/10 , 2024.  [][]$\T1/cmtt/m/n/10 https : / / www . scopus . com / pages /
+ []
+
+
+Underfull \hbox (badness 4595) in paragraph at lines 519--525
+\T1/cmr/m/it/10 In-te-grated STEM Ed-u-ca-tion Con-fer-ence (ISEC
+ []
+
+
+Underfull \hbox (badness 1348) in paragraph at lines 519--525
+\T1/cmr/m/it/10 2025)\T1/cmr/m/n/10 , 2025.  [][]$\T1/cmtt/m/n/10 https : / / www . scopus . com / pages /
+ []
+
+
+Underfull \hbox (badness 2213) in paragraph at lines 534--539
+\T1/cmr/m/n/10 chal-lenges of ap-ply-ing pre-dic-tive an-a-lyt-ics and
+ []
+
+
+Underfull \hbox (badness 3646) in paragraph at lines 534--539
+\T1/cmr/m/n/10 knowl-edge for decision-making in tal-ent man-
+ []
+
+
+Underfull \hbox (badness 2617) in paragraph at lines 534--539
+\T1/cmr/m/n/10 age-ment.  \T1/cmr/m/it/10 Jour-nal of In-no-va-tion and Knowl-
+ []
+
+
+Underfull \hbox (badness 3428) in paragraph at lines 534--539
+\T1/cmr/m/it/10 edge\T1/cmr/m/n/10 , 2026.  [][]$\T1/cmtt/m/n/10 https : / / www . scopus . com / pages /
+ []
+
+
+Underfull \hbox (badness 1917) in paragraph at lines 550--557
+\T1/cmr/m/n/10 view of pre-dic-tive mod-el-ing ap-proaches in ed-
+ []
+
+
+Underfull \hbox (badness 1533) in paragraph at lines 550--557
+\T1/cmr/m/it/10 In-no-va-tive Tech-nol-ogy and In-ter-dis-ci-plinary Sci-
+ []
+
+
+Underfull \hbox (badness 1755) in paragraph at lines 550--557
+\T1/cmr/m/it/10 ences\T1/cmr/m/n/10 , 2026.  [][]$\T1/cmtt/m/n/10 https : / / www . scopus . com / pages /
+ []
+
+[9]
+Underfull \hbox (badness 1067) in paragraph at lines 582--588
+\T1/cmr/m/n/10 Gen Z in en-gi-neer-ing ed-u-ca-tion.  In \T1/cmr/m/it/10 10th Re-
+ []
+
+
+Underfull \hbox (badness 1348) in paragraph at lines 582--588
+\T1/cmr/m/it/10 2024)\T1/cmr/m/n/10 , 2024.  [][]$\T1/cmtt/m/n/10 https : / / www . scopus . com / pages /
+ []
+
+
+Underfull \hbox (badness 2582) in paragraph at lines 598--603
+\T1/cmr/m/n/10 role of psy-cho-log-i-cal re-sources and so-ciode-mo-
+ []
+
+
+Underfull \hbox (badness 1221) in paragraph at lines 598--603
+\T1/cmr/m/n/10 graphic char-ac-ter-is-tics.  \T1/cmr/m/it/10 Jour-nal of Ca-reer As-
+ []
+
+[10
+
+] (./paper.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-10-24>
  ***********
 Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: CC77CCB43E07778336B1337790A91F4F;5362.
+(rerunfilecheck)             Checksum: 6B13EAE57090052B0A5F5F18B28A666C;6127.
  ) 
 Here is how much of TeX's memory you used:
- 11233 strings out of 469559
- 170188 string characters out of 5469270
- 602891 words of memory out of 5000000
- 39622 multiletter control sequences out of 15000+600000
- 643865 words of font info for 80 fonts, out of 8000000 for 9000
+ 11273 strings out of 469559
+ 170970 string characters out of 5469270
+ 601201 words of memory out of 5000000
+ 39645 multiletter control sequences out of 15000+600000
+ 644792 words of font info for 83 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,13n,79p,1036b,556s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <c:/Users/david/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0700.600pk> <c:/Users/david/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1000.600pk> <c:/Users/david/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1000.600pk> <c:/Users/david/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> <c:/Users/david/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk> <c:/Users/david/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk> <c:/Users/david/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> <c:/Users/david/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> <c:/Users/david/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0900.600pk> <c:/Users/david/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> <c:/Users/david/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1728.600pk><c:/Users/david/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/Users/david/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/Users/david/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/Users/david/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/Users/david/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
-Output written on paper.pdf (8 pages, 556975 bytes).
+ 75i,15n,79p,1180b,601s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ <c:/Users/david/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0700.600pk> <c:/Users/david/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1000.600pk> <c:/Users/david/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk> <c:/Users/david/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1000.600pk> <c:/Users/david/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> <c:/Users/david/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk> <c:/Users/david/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> <c:/Users/david/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> <c:/Users/david/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0900.600pk> <c:/Users/david/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> <c:/Users/david/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1728.600pk><c:/Users/david/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/Users/david/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/Users/david/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/Users/david/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/Users/david/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/Users/david/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
+Output written on paper.pdf (10 pages, 590352 bytes).
 PDF statistics:
- 752 PDF objects out of 1000 (max. 8388607)
- 318 compressed objects within 4 object streams
- 81 named destinations out of 1000 (max. 500000)
- 256 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 895 PDF objects out of 1000 (max. 8388607)
+ 419 compressed objects within 5 object streams
+ 94 named destinations out of 1000 (max. 500000)
+ 296 words of extra memory for PDF output out of 10000 (max. 10000000)
 
